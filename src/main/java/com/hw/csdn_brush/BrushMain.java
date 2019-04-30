@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import org.jsoup.nodes.Document;
@@ -29,7 +28,7 @@ public class BrushMain {
     public static List<String> getCsdnBlogsUrl(){
         List<String> urls = new ArrayList<String>();
         try {//----https://blog.csdn.net/qq_28033239
-            Document doc = JsoupUtil.getDoc(targetCSDNUrl + personalUrl);//https://blog.csdn.net/qq_31423975  ---耀明
+            Document doc = JsoupUtil.getDoc(targetCSDNUrl + personalUrl);//https://blog.csdn.net/qq_31423975  ---耀明的地址
             Element body = doc.body();
             Pattern compile = Pattern.compile(personalUrl + "/article/details/\\d{8}$");
             Elements es=body.select("a");
@@ -51,29 +50,34 @@ public class BrushMain {
     }
     
     public static void main(String[] args) {
-    	System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2,SSLv3");
-        //1.想http代理地址api发起请求，获得想要的代理ip地址
+//    	System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2,SSLv3");
+        //1.向http代理地址api发起请求，获得想要的代理ip地址 这样的网址有很多。找到方便提取IP的即可
         String url = "http://www.xicidaili.com/nn/";
-        final List<AgencyIp> ipList = JsoupUtil.getIp(url);//getForeignIp();
+        final List<AgencyIp> ipList = JsoupUtil.getIp(url);
         System.out.println("----获取代理IP数目为：" + ipList.size() + "----");
-        List<String> urls = getCsdnBlogsUrl().subList(3, 10);//subList(3, 10)可自行控制访问的地址
+        Random rand = new Random();
+        int tt = rand.nextInt(17);
+        System.out.println("----Start tt---：" + tt + "----");
+        List<String> urls = getCsdnBlogsUrl().subList(tt, tt+3);//subList(3, 10)可自行控制访问的地址
         System.out.println("----需要访问的地址数目为 ：" + urls.size() + "----");
         //-----线程池方式
-        ExecutorService pool = Executors.newFixedThreadPool(5);
-        for (final String u:urls){
-        	pool.submit(new visitExecutor(u,ipList,1));
-        }
-        //结束线程池
-        pool.shutdown();
-        //---常规线程处理方式
+        System.out.println("----开启线程池----");
+//        ExecutorService pool = Executors.newFixedThreadPool(5);
 //        for (final String u:urls){
-//            new Thread(new Runnable() {
-//                public void run() {
-//                    System.out.println("文章地址:" + u);
-//                    visit(u,ipList.subList(0, 10));
-//                }
-//            }).start();
+//        	pool.submit(new visitExecutor(u,ipList,1));
 //        }
+//        //结束线程池
+//        pool.shutdown();
+        //---常规线程处理方式
+        for (final String u:urls){
+            new Thread(new Runnable() {
+                public void run() {
+                    System.out.println("文章地址:" + u);
+                    System.out.println(Thread.currentThread().getName() + "正在执行。。。"); 
+                    JsoupUtil.visit(u,ipList,1);
+                }
+            }).start();
+        }
     }
     /**
      * 线程池处理方式
@@ -89,8 +93,10 @@ public class BrushMain {
     		this.loopCount = loopCount;
     	}
 		public void run() {
+			System.out.println(Thread.currentThread().getName() + "正在执行。。。"); 
 			JsoupUtil.visit(blogUrl,ipList,loopCount);
 		}
     }
     
+  
 }

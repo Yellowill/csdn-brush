@@ -134,7 +134,7 @@ public class JsoupUtil {
         for(int i = 0; i< time; i++) {
             //2.设置ip代理
             for(final AgencyIp AgencyIp : ipList) {
-            	System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2,SSLv3");
+//            	System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2,SSLv3");
                 System.setProperty("http.maxRedirects", "50");
                 System.getProperties().setProperty("proxySet", "true");
                 System.getProperties().setProperty("http.proxyHost", AgencyIp.getAddress());
