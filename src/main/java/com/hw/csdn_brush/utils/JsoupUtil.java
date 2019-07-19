@@ -79,6 +79,36 @@ public class JsoupUtil {
 		
 		return doc;
     }
+    
+    
+    public static Document getcsdnDoc(String url) throws IOException {
+        /**
+         * 在爬之前最好看一下浏览器访问目标网站的Request Header信息，然后进行模仿
+         */
+    	//公司环境的网络代理，一般情况应该不用设置此项
+		Proxy p = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("10.83.224.234", 8080));
+		Connection con = Jsoup.connect(url);
+		String cookie = "uuid_tt_dd=10_30743030690-1546839816625-718694; __yadk_uid=hSiGobz2wb5DlTrzi87pmLuws2jdVnPj; _ga=GA1.2.1548485498.1547437622; smidV2=20190123141707a3e1d3b59dc24d29f8358f57fb0412b30048ed65a3b8db380; dc_session_id=10_1560755702069.868985; acw_tc=2760823b15622296111838876efbdad87fdc963c429e474fad7a5e0da1df5f; firstDie=1; SESSION=144b2367-6f9c-43c0-8ef2-4e620018aa88; UserName=qq_28033239; UserInfo=d984105562b3433e82fb281b67116c14; UserToken=d984105562b3433e82fb281b67116c14; UserNick=Devil_566; AU=D6D; UN=qq_28033239; BT=1563505800984; p_uid=U000000; Hm_lvt_6bcd52f51e9b3dce32bec4a3997715ac=1563505019,1563505107,1563505157,1563505802; Hm_ct_6bcd52f51e9b3dce32bec4a3997715ac=1788*1*PC_VC!6525*1*10_30743030690-1546839816625-718694!5744*1*qq_28033239; dc_tos=puvcsy; Hm_lpvt_6bcd52f51e9b3dce32bec4a3997715ac=1563505811";
+		con.header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3");
+		con.header("Accept-Encoding", "gzip, deflate, br");
+		con.header("Accept-Language", "zh-CN,zh;q=0.9,en;q=0.8");
+		con.header("Cache-Control","max-age=0");
+		con.header("Connection","keep-alive");
+		con.header("Cookie", cookie);
+		con.header("Host", "blog.csdn.net");
+		con.header("Referer", "https://passport.csdn.net/guide");
+		con.header("Upgrade-Insecure-Requests","1");
+		con.header("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36");
+		con.maxBodySize(0);
+//		con.followRedirects(false);
+		con.timeout(600000);
+		
+		con.proxy(p);
+		con.timeout(0);
+		con.validateTLSCertificates(false);
+		Document doc = con.get();
+		return doc;
+    }
 	 /**
      * 获取代理IP地址
      * @param url
