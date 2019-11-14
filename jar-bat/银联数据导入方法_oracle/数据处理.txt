@@ -1,0 +1,13 @@
+create table temp_UNIONFILEDATA_1 as select * from API_UNIONFILEDATA where 1=2;
+select count(*) from temp_UNIONFILEDATA_1;
+
+--数据预处理
+update temp_UNIONFILEDATA_1 set und_trans_at=-replace(und_trans_at,'-','') where und_trans_at like '%-%';
+
+insert into API_UNIONFILEDATA
+select a.* from temp_UNIONFILEDATA_1 a
+left join  API_UNIONFILEDATA b on a.UND_SETTLE_DT=b.UND_SETTLE_DT and a.UND_TRANSMSN_DT_TM=b.UND_TRANSMSN_DT_TM
+ and a.UND_SYS_TRA_NO=b.UND_SYS_TRA_NO and a.UND_PRI_ACCT_NO=b.UND_PRI_ACCT_NO
+where b.UND_SETTLE_DT is null
+
+drop table temp_UNIONFILEDATA_1;

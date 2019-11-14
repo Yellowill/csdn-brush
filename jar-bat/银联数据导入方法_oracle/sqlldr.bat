@@ -1,0 +1,1 @@
+E:\app\Administrator\product\11.2.0\client_1\BIN\sqlldr.exe gz_prod/gz_prod_10@123 control=union.ctl errors=20000000 bad=union.bad  log=union.log

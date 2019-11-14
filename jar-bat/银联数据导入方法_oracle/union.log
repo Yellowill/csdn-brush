@@ -1,0 +1,71 @@
+
+SQL*Loader: Release 11.2.0.1.0 - Production on 星期五 8月 31 09:57:39 2018
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+控制文件:      union.ctl
+数据文件:      union.txt
+  错误文件:    union.bad
+  废弃文件:    未作指定
+ 
+(可废弃所有记录)
+
+要加载的数: ALL
+要跳过的数: 0
+允许的错误: 20000000
+绑定数组: 64 行, 最大 256000 字节
+继续:    未作指定
+所用路径:       常规
+
+表 TEMP_UNIONFILEDATA_1,已加载从每个逻辑记录
+插入选项对此表 APPEND 生效
+TRAILING NULLCOLS 选项生效
+
+   列名                        位置      长度  中止 包装数据类型
+------------------------------ ---------- ----- ---- ---- ---------------------
+UND_SETTLE_DT                           1     8           CHARACTER            
+UND_TRANS_ID                         NEXT     3           CHARACTER            
+UND_SYS_TRA_NO                       NEXT     6           CHARACTER            
+UND_TRANSMSN_DT_TM                   NEXT    10           CHARACTER            
+UND_FLD_INS_ID_CD                    NEXT    11           CHARACTER            
+UND_FWD_INS_ID_CD                    NEXT    11           CHARACTER            
+UND_RCV_INS_ID_CD                    NEXT    11           CHARACTER            
+UND_PRI_ACCT_NO                      NEXT    19           CHARACTER            
+UND_TRANS_AT                         NEXT    12           CHARACTER            
+UND_MCHNT_TP                         NEXT     4           CHARACTER            
+UND_RETRI_REF_NO                     NEXT    12           CHARACTER            
+UND_AUTH_ID_RESP_CD                  NEXT     6           CHARACTER            
+UND_TERM_ID                          NEXT     8           CHARACTER            
+UND_MCHNT_CD                         NEXT    15           CHARACTER            
+UND_CARD_ACCPTR_NM_LOC               NEXT    40           CHARACTER            
+UND_MCHNT_DEBT_DISC_AT               NEXT     8           CHARACTER            
+UND_MCHNT_CRET_DISC_AT               NEXT     8           CHARACTER            
+UND_TRANS_ST                         NEXT     5           CHARACTER            
+UND_TRAN_ACC                         NEXT    19           CHARACTER            
+UND_PRO_FLAG                         NEXT     1           CHARACTER            
+UND_CODE                             NEXT     2           CHARACTER            
+
+记录 824091: 被拒绝 - 表 TEMP_UNIONFILEDATA_1 的列 UND_TRANS_AT 出现错误。
+ORA-01400: 无法将 NULL 插入 ("GZ_PROD"."TEMP_UNIONFILEDATA_1"."UND_TRANS_AT")
+
+
+表 TEMP_UNIONFILEDATA_1:
+  824090 行 加载成功。
+  由于数据错误, 1 行 没有加载。
+  由于所有 WHEN 子句失败, 0 行 没有加载。
+  由于所有字段都为空的, 0 行 没有加载。
+
+
+为绑定数组分配的空间:                 17280 字节 (64 行)
+读取   缓冲区字节数: 1048576
+
+跳过的逻辑记录总数:          0
+读取的逻辑记录总数:        824091
+拒绝的逻辑记录总数:          1
+废弃的逻辑记录总数:        0
+
+从 星期五 8月  31 09:57:39 2018 开始运行
+在 星期五 8月  31 10:01:55 2018 处运行结束
+
+经过时间为: 00: 04: 15.14
+CPU 时间为: 00: 00: 35.07
